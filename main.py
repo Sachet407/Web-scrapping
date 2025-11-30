@@ -99,7 +99,7 @@ def scrape_google_maps(search_term, total_needed, existing_names=None):
                         try:
                             website_btn = page.locator('a[data-item-id="authority"]')
                             if website_btn.count() > 0:
-                                website = "Yes"
+                                website = website_btn.first.get_attribute("href")
                         except:
                             pass
                             
@@ -149,6 +149,7 @@ def scrape_google_maps(search_term, total_needed, existing_names=None):
                         results.append(data)
                         existing_names.add(aria_label)  # Add to existing to avoid duplicates
                         print(f"✓ Collected: {aria_label} ({len(results)}/{total_needed})")
+                        yield data
                         
                     except Exception as e:
                         print(f"✗ Error processing: {e}")
@@ -167,8 +168,6 @@ def scrape_google_maps(search_term, total_needed, existing_names=None):
         
         finally:
             browser.close()
-        
-        return results
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Scrape Google Maps")

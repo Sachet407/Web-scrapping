@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Maps Scraper</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <i class="fa-solid fa-map-location-dot"></i>
+        <h1>G-Maps Scraper</h1>
+      </div>
+      <div class="status-badge" id="statusBadge">Ready</div>
+    </header>
+
+    <main>
+      <div class="control-panel">
+        <div class="input-group">
+          <label for="keyword">Keyword</label>
+          <input type="text" id="keyword" placeholder="e.g. Cafe in New York" autocomplete="off">
+        </div>
+        <div class="input-group">
+          <label for="target">Target Results</label>
+          <input type="number" id="target" value="10" min="1" max="500">
+        </div>
+        <button id="startBtn" onclick="startScraping()">
+          <i class="fa-solid fa-play"></i> Start Scraping
+        </button>
+        <button id="exportBtn" onclick="openExportModal()" disabled>
+          <i class="fa-solid fa-file-export"></i> Export Data
+        </button>
+      </div>
+
+      <div class="results-container">
+        <div class="table-header">
+          <div class="col sn">SN</div>
+          <div class="col name">Name</div>
+          <div class="col contact">Contact</div>
+          <div class="col email">Email</div>
+          <div class="col website">Website</div>
+          <div class="col whatsapp">WhatsApp</div>
+          <div class="col location">Location</div>
+        </div>
+        <div class="table-body" id="resultsTable">
+          <!-- Results will appear here -->
+          <div class="empty-state" id="emptyState">
+            <i class="fa-solid fa-magnifying-glass-location"></i>
+            <p>Enter a keyword and start scraping to see results</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Export Modal -->
+  <div class="modal-overlay" id="exportModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Export Options</h2>
+        <button class="close-btn" onclick="closeExportModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="filter-group">
+          <label>WhatsApp Number</label>
+          <select id="filterWhatsapp">
+            <option value="any">Any</option>
+            <option value="has">Has WhatsApp</option>
+            <option value="no">No WhatsApp</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Website</label>
+          <select id="filterWebsite">
+            <option value="any">Any</option>
+            <option value="has">Has Website</option>
+            <option value="no">No Website</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Email</label>
+          <select id="filterEmail">
+            <option value="any">Any</option>
+            <option value="has">Has Email</option>
+            <option value="no">No Email</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="secondary-btn" onclick="closeExportModal()">Cancel</button>
+        <button class="primary-btn" onclick="exportData()">Download CSV</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
