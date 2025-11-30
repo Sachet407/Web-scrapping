@@ -1,0 +1,4 @@
+# Add your proxies here, one per line
+# Format: protocol://ip:port or protocol://user:pass@ip:port
+# Example:
+# http://123.123.123.123:8080
